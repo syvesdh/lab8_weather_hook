@@ -54,46 +54,86 @@ export function listPosts(searchText) {
 
 export function createPost(mood, text) {
     //TODO
+    return {
+        type: '@POST/CREATE_POST',
+        mood,text
+    };
 };
 
 export function createVote(id, mood) {
     //TODO
+    return {
+        type: '@POST/CREATE_VOTE',
+        id,mood
+    };
+    
 };
 
 /*  Search text */
 
 export function setSearchText(searchText) {
     // TODO
+    return {
+        type: '@SEARCH_TEXT/Set_SEARCH_TEXT',
+        searchText
+    };
 }
 
 /*  Post Form */
 
 export function input(value) {
     //TODO
+    return {
+        type:'@POSTFORM/INPUT',
+        value
+    };
 };
 
 export function inputDanger(danger) {
     //TODO
+    return {
+        type:'@POSTFORM/INPUT_DANGER',
+        danger
+    };
 };
 
 export function toggleMood() {
     //TODO
+    return {
+        type:'@POSTFORM/TOGGLE_MOOD'
+    };
 };
 
 export function setMoodToggle(toggle) {
     //TODO
+    return {
+        type:'@POSTFORM/SET_MOOD_TOGGLE',
+        toggle
+    };
 };
 
 export function selectMood(mood) {
     //TODO
+    return {
+        type:'@POSTFORM/SELECT_MOOD',
+        mood
+    };
 };
 
 /*  Post item */
 
 export function toggleTooltip(id) {
    //TODO
+   return {
+    type:'@POSTITEM/TOGGLE_TOOLTIP',
+    id
+   };
 };
 
 export function setTooltipToggle(id, toggle) {
     //TODO
+    return {
+        type:'@POSTITEM/SET_TOOLTIP_TOOGLE',
+        id,toggle
+    };
 };

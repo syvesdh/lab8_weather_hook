@@ -1,4 +1,5 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
+import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {
     Alert,
@@ -24,6 +25,48 @@ import './PostForm.css';
 
 function PostForm (props){
     const inputEl = useRef(null);
+    const moodToggleEl = null;
+
+    const [inputValue, setInputValue] = useState(props.city);
+    const [inputDanger, setInputDanger] = useState(false);
+    const [moodToggle, setMoodToggle] = useState(false);
+    const [mood, setMood] = useState('na');
+
+    function handleInputChange(e) {
+        const text = e.target.value;
+        setInputValue(text);
+        if(text) {
+            setInputDanger(false);
+        }
+    }
+
+    function handleDropdownSelect(mood) {
+        setMood(mood);
+    }
+
+    function handleMoodToggle(e) {
+        setMoodToggle(!moodToggle);
+    }
+
+    function handlePost() {
+        if(mood === "na") {
+            setMoodToggle(true);
+            return;
+        }
+        if(!inputValue) {
+            setInputDanger(true);
+            return;
+        }
+        //props.onPost() ?
+        setInputValue("");
+        setMood("na");
+    }
+
+    function inputDangerClass() {
+        setInputDanger(inputDanger);
+    }
+
+
 
     // TODO
 
@@ -64,5 +107,6 @@ PostForm.propTypes = {
 };
 
 export default connect((state) => {
+    return {...state.postForm};
     // TODO
 })(PostForm);

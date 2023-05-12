@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Tooltip } from 'reactstrap';
 import { connect } from 'react-redux';
@@ -9,6 +9,17 @@ import './PostItem.css';
 
 function PostItem(props) {
     //TODO
+    const [tooltipOpen, setTooltipOpen] = useState(false);
+    function handleVote(vote) {
+        setTooltipOpen(false);
+    }
+    function handleTooltipToggle() {
+        setTooltipOpen(!tooltipOpen);
+    }
+    function handleClick() {
+        setTooltipOpen(true);
+    }
+
 
     return (
         <div className="post-item d-flex flex-column" onClick={handleClick}>

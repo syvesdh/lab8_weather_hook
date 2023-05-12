@@ -10,7 +10,7 @@ export function unit(state = initUnitState, action) {
 }
 
 const initWeatherState = {
-    city: 'na',
+    city: 'hsinchu',
     code: -1,
     group: 'na',
     description: 'N/A',
