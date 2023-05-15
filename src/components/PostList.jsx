@@ -13,9 +13,6 @@ import './PostList.css';
 function PostList() {
     const posts = useSelector(state => state.post.posts);
     //TODO
-    useEffect(() => {
-        
-    })
 
     let children = (
         <ListGroupItem className='empty d-flex justify-content-center align-items-center'>
@@ -35,7 +32,6 @@ function PostList() {
             <ListGroup>
                 {children}
             </ListGroup>
-            <p> Lorem Ipsum </p>
         </div>
     );
 }

@@ -54,19 +54,26 @@ export function listPosts(searchText) {
 
 export function createPost(mood, text) {
     //TODO
-    return {
-        type: '@POST/CREATE_POST',
-        mood,text
-    };
+    return (dispatch, getState) => {
+        dispatch(startLoading());
+
+        return createPostFromApi(mood, text).then(() => {
+            console.log("createPost in")
+            dispatch(listPosts())
+            console.log("createPost out")
+        }).catch(e => {
+            console.log("createPost fucked up")
+        }).then(() => dispatch(endCreatePost()))
+    }
 };
 
 export function createVote(id, mood) {
     //TODO
     return {
-        type: '@POST/CREATE_VOTE',
-        id,mood
-    };
-    
+        type: 'POST/CREATE_VOTE',
+        id,
+        mood
+    }
 };
 
 /*  Search text */
@@ -74,9 +81,9 @@ export function createVote(id, mood) {
 export function setSearchText(searchText) {
     // TODO
     return {
-        type: '@SEARCH_TEXT/Set_SEARCH_TEXT',
+        type: '@SEARCH_TEXT/SET_SEARCH_TEXT',
         searchText
-    };
+    }
 }
 
 /*  Post Form */
@@ -84,56 +91,57 @@ export function setSearchText(searchText) {
 export function input(value) {
     //TODO
     return {
-        type:'@POSTFORM/INPUT',
+        type: '@POST_FORM/INPUT',
         value
-    };
+    }
 };
 
 export function inputDanger(danger) {
     //TODO
     return {
-        type:'@POSTFORM/INPUT_DANGER',
+        type: '@POST_FORM/INPUT_DANGER',
         danger
-    };
+    }
 };
 
 export function toggleMood() {
     //TODO
     return {
-        type:'@POSTFORM/TOGGLE_MOOD'
-    };
+        type: '@POST_FORM/TOGGLE_MOOD'
+    }
 };
 
 export function setMoodToggle(toggle) {
     //TODO
     return {
-        type:'@POSTFORM/SET_MOOD_TOGGLE',
+        type: '@POST_FORM/SET_MOOD_TOGGLE',
         toggle
-    };
+    }
 };
 
 export function selectMood(mood) {
     //TODO
     return {
-        type:'@POSTFORM/SELECT_MOOD',
+        type: '@POST_FORM/SELECT_MOOD',
         mood
-    };
+    }
 };
 
 /*  Post item */
 
 export function toggleTooltip(id) {
-   //TODO
-   return {
-    type:'@POSTITEM/TOGGLE_TOOLTIP',
-    id
-   };
+     //TODO
+     return {
+        type: '@POST_ITEM/TOGGLE_TOOLTIP',
+        id
+     }
 };
 
 export function setTooltipToggle(id, toggle) {
     //TODO
     return {
-        type:'@POSTITEM/SET_TOOLTIP_TOOGLE',
-        id,toggle
-    };
+        type: '@POST_ITEM/TOGGLE_TOOLTIP',
+        id,
+        toggle
+    }
 };

@@ -1,7 +1,7 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { Tooltip } from 'reactstrap';
-import { connect } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 import { getMoodIcon } from 'utilities/weather.js';
 import { createVote, setTooltipToggle, toggleTooltip } from 'states/post-actions.js';
@@ -9,17 +9,22 @@ import './PostItem.css';
 
 function PostItem(props) {
     //TODO
-    const [tooltipOpen, setTooltipOpen] = useState(false);
-    function handleVote(vote) {
-        setTooltipOpen(false);
-    }
-    function handleTooltipToggle() {
-        setTooltipOpen(!tooltipOpen);
-    }
-    function handleClick() {
-        setTooltipOpen(true);
+    const dispatch = useDispatch();
+    const {id, mood, text, clearVotes, cloudsVotes, drizzleVotes, rainVotes, thunderVotes, snowVotes, windyVotes, ts} = props
+    const {tooltipOpen} = props
+
+    const handleClick = () => {
+        dispatch(setTooltipToggle(id, true))
     }
 
+    const handleTooltipToggle = () => {
+        dispatch(toggleTooltip(id))
+    }
+
+    const handleVote = (vote) => {
+        dispatch(createVote(id, vote));
+        dispatch(setTooltipToggle(id, false))
+    }
 
     return (
         <div className="post-item d-flex flex-column" onClick={handleClick}>

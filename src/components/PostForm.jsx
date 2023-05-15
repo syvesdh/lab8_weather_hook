@@ -1,5 +1,5 @@
-import React, { useRef, useState } from 'react';
-import {connect} from 'react-redux';
+import React, { useEffect, useRef, useState } from 'react';
+import { connect, useDispatch, useSelector} from 'react-redux';
 import PropTypes from 'prop-types';
 import {
     Alert,
@@ -24,49 +24,42 @@ import {
 import './PostForm.css';
 
 function PostForm (props){
+    const dispatch = useDispatch();
     const inputEl = useRef(null);
-    const moodToggleEl = null;
+    const inputDangerClass = inputDanger ? 'has-danger' : ''
 
-    const [inputValue, setInputValue] = useState(props.city);
-    const [inputDanger, setInputDanger] = useState(false);
-    const [moodToggle, setMoodToggle] = useState(false);
-    const [mood, setMood] = useState('na');
+    const {inputValue, mood, moodToggle} = useSelector((state) => state.postForm);
 
-    function handleInputChange(e) {
-        const text = e.target.value;
-        setInputValue(text);
-        if(text) {
-            setInputDanger(false);
+    const handleMoodToggle = () => {
+        setMoodToggle(!moodToggle)
+        dispatch(toggleMood())
+    }
+
+    const handleInputChange = (e) => {
+        dispatch(input(e.target.value))
+        if(e.target.value && inputDanger) {
+            dispatch(inputDanger(false))
         }
     }
 
-    function handleDropdownSelect(mood) {
-        setMood(mood);
-    }
-
-    function handleMoodToggle(e) {
-        setMoodToggle(!moodToggle);
-    }
-
-    function handlePost() {
-        if(mood === "na") {
-            setMoodToggle(true);
+    const handlePost = () => {
+        if(mood === 'na') {
+            dispatch(setMoodToggle(true))
             return;
         }
         if(!inputValue) {
-            setInputDanger(true);
+            dispatch(inputDanger(true));
             return;
         }
-        //props.onPost() ?
-        setInputValue("");
-        setMood("na");
+
+        dispatch(createPost(mood, inputValue));
+        dispatch(input(''));
+        dispatch(selectMood('na'))
     }
 
-    function inputDangerClass() {
-        setInputDanger(inputDanger);
+    const handleDropdownSelect = (mood) => {
+        dispatch(selectMood(mood))
     }
-
-
 
     // TODO
 
@@ -107,6 +100,8 @@ PostForm.propTypes = {
 };
 
 export default connect((state) => {
-    return {...state.postForm};
     // TODO
+    return {
+        ...state.postForm
+    }
 })(PostForm);

@@ -62,10 +62,9 @@ function Today(props) {
         <h4 className='label'>
           <i className='fa fa-paper-plane' aria-hidden='true'></i>  Posts
         </h4>
-        
-        <PostForm/>
+        <PostForm />
         <PostList />
-        {postLoading && <Alert color='warning' className='loading'>Loading...</Alert>} 
+        {postLoading && <Alert color='warning' className='loading'>Loading...</Alert>}
       </div>
     </div>
   );
