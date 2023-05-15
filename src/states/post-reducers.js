@@ -59,6 +59,12 @@ export function post(state = initPostState, action) {
 
 export function searchText(state = '', action) {
     //TODO
+    switch(action.type){
+        case '@SEARCH_TEXT/Set_SEARCH_TEXT':
+            return action.searchText;
+        default:
+            return state;
+    }
 }
 
 
@@ -73,6 +79,35 @@ const initPostFormState = {
 
 export function postForm(state = initPostFormState, action) {
     //TODO
+    switch (action.type) {
+        case '@POSTFORM/INPUT':
+            return{
+                ...state,
+                inputValue: action.value
+            };
+        case '@POSTFORM/INPUT_DANGER':
+            return{
+                ...state,
+                inputDanger: action.danger
+            };
+        case '@POSTFORM/TOGGLE_MOOD':
+            return{
+                ...state,
+                moodToggle: !state.moodToggle
+            };
+        case '@POSTFORM/SET_MOOD_TOGGLE':
+            return{
+                ...state,
+                moodToggle: action.toggle
+            };
+        case '@POSTFORM/SELECT_MOOD':
+            return{
+                ...state,
+                mood: action.mood
+            };
+        default:
+            return state;
+    }
 }
 
 /* Post item */
@@ -83,4 +118,18 @@ const initPostItemState = {
 
 export function postItem(state = initPostItemState, action) {
     //TODO
+    switch(action.type) {
+        case '@POSTITEM/TOGGLE_TOOLTIP':
+            return{
+                ...state.tooltipOpen,
+                [action.id]: !(state.tooltipOpen[action.id])
+            };
+        case '@POSTITEM/SET_TOOLTIP_TOOGLE':
+            return{
+                ...state.tooltipOpen,
+                [action.id]: action.toggle
+            };
+        default:
+            return state;
+    }
 }
