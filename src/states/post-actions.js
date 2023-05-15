@@ -69,10 +69,15 @@ export function createPost(mood, text) {
 
 export function createVote(id, mood) {
     //TODO
-    return {
-        type: 'POST/CREATE_VOTE',
-        id,
-        mood
+    return (dispatch, getState) => {
+        dispatch(startLoading());
+        return createVoteFromApi(id, mood).then(() => {
+            console.log("createVote in")
+            dispatch(listPosts())
+            console.log("createVote out")
+        }).catch(e => {
+            console.log("createVote fucked up")
+        }).then(() => dispatch(endLoading()))
     }
 };
 
@@ -139,6 +144,7 @@ export function toggleTooltip(id) {
 
 export function setTooltipToggle(id, toggle) {
     //TODO
+    
     return {
         type: '@POST_ITEM/TOGGLE_TOOLTIP',
         id,

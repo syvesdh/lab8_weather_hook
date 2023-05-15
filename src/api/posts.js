@@ -64,8 +64,18 @@ export function createVote(id, mood) {
 // Simulated server-side code
 function _createVote(id, mood) {
     const posts = _listPosts().map(p => {
-        if (p.id === id) {
+        if (p.id !== id) {
+            
+        } else if (!p.voted) {
             p[mood.toLowerCase() + 'Votes']++;
+            p.voted = mood;
+        } else if (p.voted === mood) {
+            p[mood.toLowerCase() + 'Votes']--;
+            p.voted = null;             
+        } else {
+            p[p.voted.toLowerCase() + 'Votes']--;
+            p[mood.toLowerCase() + 'Votes']++;
+            p.voted = mood;
         }
         return p;
     });
