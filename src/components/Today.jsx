@@ -7,7 +7,7 @@ import WeatherDisplay from 'components/WeatherDisplay.jsx';
 import WeatherForm from 'components/WeatherForm.jsx';
 import { cancelWeather } from 'api/open-weather-map.js';
 import { getWeather } from 'states/weather-actions.js';
-import { listPosts } from 'states/post-actions.js';
+import { listPosts, setSearchText } from 'states/post-actions.js';
 import PostForm from 'components/PostForm.jsx';
 import PostList from 'components/PostList.jsx';
 
@@ -45,15 +45,23 @@ function Today(props) {
 
   useEffect(() => {
     if (searchText !== props.searchText) {
-      dispatch(listPosts(searchText));
+      dispatch(listPosts(props.searchText));
     }
-  }, [dispatch, searchText]);
+  }, [dispatch, props.searchText]);
+
+  useEffect(() => {
+    console.log(props.searchText)
+  }, [dispatch, props.searchText]);
+
+  const handle = () => {
+    console.log(props.searchText);
+  }
 
   document.body.className = `weather-bg ${group}`;
   document.querySelector('.weather-bg .mask').className = `mask ${masking ? 'masking' : ''}`;
 
   return (
-    <div className='today'>
+    <div className='today' onClick={handle}>
       <div className='weather'>
         <WeatherForm city={city} defaultUnit={unit} submitAction={getWeather} />
         <WeatherDisplay {...{ group, description, temp, unit, masking }} day='today' />

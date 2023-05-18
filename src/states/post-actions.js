@@ -32,13 +32,6 @@ function endCreatePost(post) {
     };
 }
 
-function endCreateVote(post) {
-    return {
-        type: '@POST/END_CREATE_VOTE',
-        post
-    };
-}
-
 export function listPosts(searchText) {
     return (dispatch, getState) => {
         dispatch(startLoading());
@@ -85,6 +78,7 @@ export function createVote(id, mood) {
 
 export function setSearchText(searchText) {
     // TODO
+
     return {
         type: '@SEARCH_TEXT/SET_SEARCH_TEXT',
         searchText
